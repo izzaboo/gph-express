@@ -1,0 +1,20 @@
+//- includes/notes.pug
+
+div.reveal(class=['grid-x', 'grid-padding-x'], id='notes-modal', data-reveal)
+  div(class=['small-12', 'cell'])
+    h1= oneData.title
+    div(class=['grid-x', 'grid-padding-x'])
+      div(class=['small-12', 'cell'])
+        div(class=['grid-x', 'grid-padding-x'])
+          div(class=['small-12', 'cell'])
+            label.npp(for='f_note_new') New Note:
+            input#f_note_new.form-control(type='text', placeholder='Enter note here', name='f_note_new')
+            input#itemid.form-control(name='itemid', type='hidden', value=oneData.itemid)
+        div(class=['grid-x', 'grid-padding-x'])
+          div(class=['small-12', 'cell'])
+            button.button.primary(id='newNoteBtn') Enter
+    div(class=['grid-x', 'grid-padding-x'])
+      each note, index in oneData.notes
+        div(class=['small-12', 'cell'], id='noteList')
+          p= index + ': ' + note
+    button.close-button(class='radius', data-close, aria-label='Close modal', type='button'): span(aria-hidden='true') &times;

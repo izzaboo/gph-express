@@ -1,0 +1,13 @@
+//- includes/footer.pug
+
+
+footer(id='footer')
+  div(class=['pure-u-1','pure-u-md-3-4', 'pure-u-lg-10-12'])
+    if query_err
+      p= query_err
+    else
+      p Artwork &copy Neltje.
+      p Website, app, or whatever you call it is still in beta, under construction and all that. &copy Greg Haas
+  div(class=['pure-u-1','pure-u-md-1-4','pure-u-lg-2-12'])
+    - var url = 'search/';
+    a(href='/' + url) Search

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  .pure-g
+    .pure-u-1
+      h2= title
+      form#f_login(class=['pure-form','pure-form-stacked'], action='/users/sendtoken', method='POST')
+        label.npp(for='user', name='userLabel') User:
+        input#user(name='user', type='text', placeholder='User')
+        label.npp(for='email', name='emailLabel') Email:
+        input#email(name='email', placeholder='Email')
+        label.npp(for='password', name='passwordLabel') Password:
+        input#password(name='password', placeholder='Password')
+        button.pure-button.pure-button-primary(type='submit', id='login') Login

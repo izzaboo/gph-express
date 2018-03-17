@@ -1,0 +1,75 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #303030;
+  color: white;
+}
+
+a {
+  color: #00B7FF;
+}
+
+label.npp {
+  color: inherit;
+}
+
+.images img {
+  margin: .8em;
+}
+
+.listed {
+  box-shadow: 8px 8px 8px #888888;
+  height: auto;
+  width: 25%;
+}
+
+.searched {
+  max-height: 250px;
+  width: auto;
+}
+
+#notes-modal {
+  color: black;
+}
+#upload-input {
+//  display: none;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
+}
+
+.message ul {
+  list-style-type: none;
+}
+
+.back-to-top {
+  background: none;
+  margin: 0;
+  padding-left: 10px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  z-index: 100;
+  display: none;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #ff9000;
+}
+
+.back-to-top i {
+  font-size: 60px;
+}
