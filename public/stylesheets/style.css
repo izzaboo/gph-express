@@ -9,8 +9,19 @@ a {
   color: #00B7FF;
 }
 
+#error {
+  color: black;
+  background-color: #FFF6BB;
+  padding: 1.2em;
+  border-radius: 4px
+}
+
 label.npp {
   color: inherit;
+}
+
+input.npp {
+  color: black;
 }
 
 .images img {
