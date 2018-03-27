@@ -9,12 +9,12 @@ const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 //var expressValidator = require('express-validator');
 
+require('dotenv').config();
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
-require('dotenv').config();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator/check');
 const { matchedData, sanitizeBody } = require('express-validator/filter');
 
 exports.sendToken = [
+
   //req.checkBody('f_search_q', 'search term required').notEmpty();
   body('email', 'eMail address is required.').isEmail().withMessage('must be valid eMail'),
   //Trim and escape the title and itemid fields.
@@ -36,9 +37,9 @@ exports.sendToken = [
   } else {
     // form seems to have passed validation
     db.connector.task('my-task', t => {
-      const sql0 = t.any('SELECT 1 + 1 AS solution');
-      //const sql1 = t.any(db.sqlGetLocations);
-      return t.batch([sql0]);
+      //const sql0 = t.any('SELECT 1 + 1 AS solution');
+      const sql1 = t.any(db.sqlGetLocations);
+      return t.batch([sql1]);
       })
       .then(data => {
          res.status(200).json({ list: data });
@@ -46,7 +47,7 @@ exports.sendToken = [
        })
        .catch(function (err) {
          console.log('uh-oh: ' + search);
-         console.log(process.env);
+         //console.log(process.env);
          return next(err);
         });
     }
