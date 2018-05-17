@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .pure-g
+    .pure-u-1
+      h1= title
+  .pure-g
+    div.pure-u-1(class='pure-u-sm-6-12')
+      h4 Welcome
+      case title
+        when 'User index'
+          p This is an index file for user actions.
+          .links
+            a(href='/users/login') Login
+        when 'Register'
+          p This is a form to register you're happy self.
+          .form
+            input(type='email',name='email',id='email',placeholder='eMail')
+        when 'Login'
+          p Are you registered? Go ahead and login. If not, maybe 
+            a(href='/users/register') register a new email
+            | .
+          form#f_login(class=['pure-form','pure-form-stacked'], action='', method='POST')
+            label.npp(for='email', name='emailLabel') eMail Address:
+            input.npp(id='email', name='email', placeholder='authorized eMail')
+            button.pure-button.pure-button-primary(type='submit', id='login') Login
