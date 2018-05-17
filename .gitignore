@@ -4,6 +4,7 @@
 # misc
 .DS_Store
 .env
+package-lock.json
 
 # images
 /public/images

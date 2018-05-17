@@ -1,6 +1,5 @@
 const path = require('path');
 const db = require('../models/db');
-var session = require('express-session')
 const { body, validationResult } = require('express-validator/check');
 const { matchedData, sanitizeBody } = require('express-validator/filter');
 
