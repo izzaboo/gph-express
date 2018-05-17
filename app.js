@@ -1,5 +1,5 @@
 var express = require('express');
-var session = require('express-session');
+//var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -16,12 +16,12 @@ var users = require('./routes/users');
 
 var app = express();
 
-var sess = {
+/*var sess = {
   secret: 'couch dog growls box',
   cookie: {},
   resave: false,
   saveUninitialized: true
-}
+}*/
 
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
@@ -41,9 +41,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 //app.use(expressValidator());
-app.use(session(sess));
+//app.use(session(sess));
 
 app.use('', index);
 app.use('/users', users);
