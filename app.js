@@ -16,6 +16,18 @@ var users = require('./routes/users');
 
 var app = express();
 
+var sess = {
+  secret: 'couch dog growls box',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -31,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(expressValidator());
+app.use(session(sess));
 
 app.use('', index);
 app.use('/users', users);

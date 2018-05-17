@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var session = require('express-session')
 var user = require('../controllers/user_controller.js')
 
 /* GET login screen. */
@@ -12,6 +11,12 @@ router.get('/login', function(req, res, next) {
 //   res.render('login', {title: 'Token Sent'});
 // })
 
-router.post('/login', user.sendToken)
+router.post('/login', user.sendToken);
+
+// router.get('/session-test', function(req, res, next) {
+//   res.render('login', {title: 'Session Test'});
+// });
+//
+// router.post('/session-test', user.testSession);
 
 module.exports = router;

@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('neltje:server');
+var debug = require('debug')('gph-express');
 var http = require('http');
 
 /**

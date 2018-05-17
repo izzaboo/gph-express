@@ -1,7 +1,25 @@
 const path = require('path');
 const db = require('../models/db');
+var session = require('express-session')
 const { body, validationResult } = require('express-validator/check');
 const { matchedData, sanitizeBody } = require('express-validator/filter');
+
+exports.testSession = [
+  body('email', 'eMail address is required.').isEmail().withMessage('must be valid eMail'),
+  sanitizeBody('email').trim().escape(),
+
+  (req, res, next) => {
+    console.log(req.session);
+    var sessData = req.session;
+    sessData.uemail = req.body.email;
+    res.render('login', {title: 'Hello ' + sessData.uemail});
+  }
+];
+
+var users = [
+    { id: 1, email: 'greg@izzaboo.com' },
+    { id: 2, email: 'gregory.haas@izzaboo.com' }
+];
 
 exports.sendToken = [
 
@@ -14,17 +32,6 @@ exports.sendToken = [
   (req, res, next) => {
   const errors = validationResult(req);
 
-  // switch(req.body.images) {
-  //   case 'placeholder':
-  //       searchFile = db.sqlSearchPlaceholder;
-  //       break;
-  //   case 'hasimages':
-  //       searchFile = db.sqlSearchNoImg;
-  //       break;
-  //   default:
-  //       searchFile = db.sqlSearch;
-  //   }
-
 //  var search = func.parseSearch();
   var search = req.body.email;
 // var search = parseSearch( req.body.f_search.toString() );
@@ -35,21 +42,23 @@ exports.sendToken = [
       console.log('There are following validation errors: ' + errormsgs.join('&&'));
       res.render('login', { title: 'Login', errors: errormsgs } );
   } else {
+    var errormsgs = ['Hello ' + req.body.email + '.', 'Your email was passed.','It is not yet validated.'];
+    res.render('login', { title: 'Login', errors: errormsgs } );
     // form seems to have passed validation
-    db.connector.task('my-task', t => {
-      //const sql0 = t.any('SELECT 1 + 1 AS solution');
-      const sql1 = t.any(db.sqlGetLocations);
-      return t.batch([sql1]);
-      })
-      .then(data => {
-         res.status(200).json({ list: data });
-        //res.render('login', {title: 'Hello ' + req.body.email, list: data} );
-       })
-       .catch(function (err) {
-         console.log('uh-oh: ' + search);
-         //console.log(process.env);
-         return next(err);
-        });
+    // db.connector.task('my-task', t => {
+    //   //const sql0 = t.any('SELECT 1 + 1 AS solution');
+    //   const sql1 = t.any(db.sqlGetLocations);
+    //   return t.batch([sql1]);
+    //   })
+    //   .then(data => {
+    //      res.status(200).json({ list: data });
+    //     //res.render('login', {title: 'Hello ' + req.body.email, list: data} );
+    //    })
+    //    .catch(function (err) {
+    //      console.log('uh-oh: ' + search);
+    //      //console.log(process.env);
+    //      return next(err);
+    //     });
     }
   }
 ];
