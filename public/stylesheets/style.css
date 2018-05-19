@@ -9,7 +9,7 @@ a {
   color: #00B7FF;
 }
 
-#error {
+.errors {
   color: black;
   background-color: #FFF6BB;
   padding: 1.2em;

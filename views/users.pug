@@ -14,8 +14,22 @@ block content
             a(href='/users/login') Login
         when 'Register'
           p This is a form to register you're happy self.
-          .form
-            input(type='email',name='email',id='email',placeholder='eMail')
+          if errorsJSON
+            p.errors= errorsJSON.detail
+          if errorsArray
+            each val in errorsArray
+              p.errors= val.msg
+          form#f_register(class=['pure-form','pure-form-stacked'], action='/users/register',method='POST')
+            label.npp(for='email', name='emailLabel') eMail Address:
+            input.npp(type='email',name='email',id='email',placeholder='eMail')
+            label.npp(for='password', name='passwordLabel') Password:
+            input.npp(type='password',name='password',id='password',placeholder='Password')
+            label.npp(for='passwordMatch', name='passwordMatchLabel') Re-enter Password:
+            input.npp(type='password',name='passwordMatch',id='passwordMatch',placeholder='Re-enter Password')
+            button.pure-button.pure-button-primary(type='submit', id='register') Register
+        when 'Registration Complete'
+          p.errors= complete
+          p: a(href='/users/login') Login
         when 'Login'
           p Are you registered? Go ahead and login. If not, maybe 
             a(href='/users/register') register a new email

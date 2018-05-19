@@ -5,8 +5,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const { check, validationResult } = require('express-validator/check');
-const { matchedData, sanitize } = require('express-validator/filter');
+//const { check, validationResult } = require('express-validator/check');
+//const { matchedData, sanitize } = require('express-validator/filter');
 //var expressValidator = require('express-validator');
 
 require('dotenv').config();
@@ -40,9 +40,9 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(expressValidator());
 //app.use(session(sess));
 
 app.use('', index);
