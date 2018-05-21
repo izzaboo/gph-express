@@ -9,6 +9,10 @@ var bodyParser = require('body-parser');
 //const { matchedData, sanitize } = require('express-validator/filter');
 //var expressValidator = require('express-validator');
 
+var session = require('express-session');
+
+var passport = require('passport');
+
 require('dotenv').config();
 
 var index = require('./routes/index');
@@ -16,12 +20,13 @@ var users = require('./routes/users');
 
 var app = express();
 
-/*var sess = {
-  secret: 'couch dog growls box',
+var sess = {
+  store: new (require('connect-pg-simple')(session))(),
+  secret: process.env.SITE_COOKIE_SECRET,
   cookie: {},
   resave: false,
-  saveUninitialized: true
-}*/
+  saveUninitialized: false
+}
 
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
@@ -43,7 +48,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(session(sess));
+app.use(session(sess));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('', index);
 app.use('/users', users);

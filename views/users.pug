@@ -15,10 +15,10 @@ block content
         when 'Register'
           p This is a form to register you're happy self.
           if errorsJSON
-            p.errors= errorsJSON.detail
+            p(class=['errors','psql'])= errorsJSON.detail
           if errorsArray
             each val in errorsArray
-              p.errors= val.msg
+              p(class=['errors','check'])= val.msg
           form#f_register(class=['pure-form','pure-form-stacked'], action='/users/register',method='POST')
             label.npp(for='email', name='emailLabel') eMail Address:
             input.npp(type='email',name='email',id='email',placeholder='eMail')
