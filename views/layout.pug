@@ -8,11 +8,30 @@ html
     meta(name='author', content='Greg Haas')
     title= title
     link(rel='stylesheet', href='/stylesheets/pure-min.css')
+    link(rel='stylesheet', href='/stylesheets/pure-menu.css')
     link(rel='stylesheet', href='/stylesheets/grids-responsive-min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/foundation-icons.css')
   body
+    div(class=['pure-g','custom-wrapper'],id='menu')
+      div(class=['pure-u-1','pure-u-md-1-2'])
+        div.pure-menu
+          a(href='/',class=['pure-menu-heading','custom-brand']) GPH-Express
+          a(href='#',class=['custom-toggle'],id='toggle')
+            <s class='bar'></s>
+            <s class='bar'></s>
+      div(class=['pure-u-1','pure-u-md-1-2'])
+        div(class=['pure-menu','pure-menu-horizontal','custom-can-transform'])
+          ul.pure-menu-list
+            li.pure-menu-item: a.pure-menu-link(href='/users') Users Home
+            if isAuthenticated
+              li.pure-menu-item: a.pure-menu-link(href='/users/profile') Profile
+              li.pure-menu-item: a.pure-menu-link(href='/users/logout') Logout
+            else
+              li.pure-menu-item: a.pure-menu-link(href='/users/login') Login
+              li.pure-menu-item: a.pure-menu-link(href='/users/register') Register
     block content
     include includes/footer.pug
   script(src='/javascripts/jquery.min.js')
   script(src='/javascripts/ajax.js')
+  script(src='/javascripts/pure-menu.js')

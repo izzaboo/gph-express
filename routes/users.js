@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../models/db');
 var user = require('../controllers/user_controller.js');
 var passport = require('passport');
-//var expressValidator = require('express-validator');
+
 const { body, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 var bcrypt = require('bcrypt');
@@ -90,8 +90,30 @@ router.post('/register', [
 
 /* GET login screen. */
 router.get('/login', function(req, res, next) {
-  res.render('users', {title: 'Login'});
+  res.render('login', {title: 'Login'});
 });
+
+/* GET logout screen. */
+router.get('/logout', function(req, res, next) {
+  req.logout();
+  req.session.destroy(() => {
+    res.clearCookie('connect.sid');
+    res.redirect('/users');
+    });
+});
+
+/* GET profile screen. */
+router.get('/profile', authenticationMiddleware(), function(req, res, next) {
+  res.render('profile', {title: 'Profile'});
+});
+
+/* POST login screen */
+router.post('/login', passport.authenticate('local',
+      {
+       successRedirect: '/users/profile',
+       failureRedirect: '/users/login'
+      }
+));
 
 /* Test DB */
 router.get('/all', function(req, res, next) {
@@ -117,5 +139,14 @@ passport.serializeUser(function(id, done) {
 passport.deserializeUser(function(id, done) {
   done(null, id);
 });
+
+function authenticationMiddleware () {  
+	return (req, res, next) => {
+		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+
+	    if (req.isAuthenticated()) return next();
+	    res.redirect('/users/login')
+	}
+}
 
 module.exports = router;

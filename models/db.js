@@ -22,7 +22,7 @@ const connector = {
 function sql(file) {
   const fullPath = path.join(__dirname, file);
   return new pgp.QueryFile(fullPath, {minify:true});
-  console.log('doink'+fullPath);
+ // console.log('doink'+fullPath);
 }
 
 module.exports = {

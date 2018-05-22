@@ -5,23 +5,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//const { check, validationResult } = require('express-validator/check');
-//const { matchedData, sanitize } = require('express-validator/filter');
-//var expressValidator = require('express-validator');
-
 var session = require('express-session');
 
-var passport = require('passport');
-
 require('dotenv').config();
+
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+var db = require('./models/db.js');
+var pgSession = require('connect-pg-simple')(session);
+
 var sess = {
-  store: new (require('connect-pg-simple')(session))(),
+  store: new pgSession({
+    pgPromise: db.cn
+  }),
   secret: process.env.SITE_COOKIE_SECRET,
   cookie: {},
   resave: false,
@@ -45,15 +49,48 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next) {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
+
 app.use('', index);
 app.use('/users', users);
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+      // query db and get hashed password
+      db.cn.one('SELECT id, password FROM users WHERE email = $1',[username])
+            .then(user => {
+              //user was found!
+              //hash the password from login form
+              const hash = user.password;
+
+              // compare hashed user form password to hashed password from db
+              bcrypt.compare(password, hash, function(err, response) {
+                if (response === true) {
+                  return done(null, {user_id: user.id});
+                } else {
+                  return done(null, false);
+                }
+              });
+
+            })
+            .catch(error => {
+              // uhoh!
+              console.log('error: ' + error);
+              done(null, false);
+            });
+
+    }
+));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

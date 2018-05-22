@@ -1,12 +1,14 @@
 extends layout
 
 block content
-  .pure-g
+  div(class=['pure-g','padded-box'])
     .pure-u-1
       h2= title
-      form#f_login(class=['pure-form','pure-form-stacked'], action='', method='POST')
-        label.npp(for='email', name='emailLabel') eMail Address:
-        input.npp(id='email', name='email', placeholder='authorized eMail')
+      form#f_login(class=['pure-form','pure-form-stacked'], action='/users/login', method='POST')
+        label.npp(for='username', name='usernameLabel') eMail Address:
+        input.npp(type='text',id='username', name='username', placeholder='authorized eMail')
+        label.npp(for='password',name='passwordLabel') Password:
+        input.npp(type='password',id='password',name='password',placeholder='your password')
         button.pure-button.pure-button-primary(type='submit', id='login') Login
   if errors
     .pure-g
