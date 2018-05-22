@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
-var user = require('../controllers/user_controller.js');
+
 var passport = require('passport');
 
 const { body, validationResult } = require('express-validator/check');
@@ -129,8 +129,6 @@ router.get('/all', function(req, res, next) {
       }
   })
 });
-
-router.post('/login', user.sendToken);
 
 passport.serializeUser(function(id, done) {
   done(null, id);
